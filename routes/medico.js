@@ -1,4 +1,4 @@
-var express = require('express');
+/*var express = require('express');
 
 var mdAutenticacion = require('../middlewares/autenticacion');
 
@@ -204,4 +204,4 @@ app.delete('/:id', mdAutenticacion.verificaToken, (req, res) => {
 });
 
 
-module.exports = app;
+module.exports = app;*/

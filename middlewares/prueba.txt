@@ -1,0 +1,5 @@
+en un archivo de prueba realizar la tarea de consultar la base de datos
+y extraer informacion para registrarla en un archivo .txt y luego
+obtener de alli lo que sea referente de la consulta antes hecha
+utilizado para encontrar el soporte de forma automatica e implementada como 
+un middleware

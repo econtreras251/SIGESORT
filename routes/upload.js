@@ -3,18 +3,15 @@ var express = require('express');
 var fileUpload = require('express-fileupload');
 var fs = require('fs');
 
-
 var app = express();
 
 var Usuario = require('../models/usuario');
-var Medico = require('../models/medico');
-var Hospital = require('../models/hospital');
+//var Medico = require('../models/medico');
+var Tickets = require('../models/tickets');
 
 
 // default options
 app.use(fileUpload());
-
-
 
 
 app.put('/:tipo/:id', (req, res, next) => {
@@ -23,7 +20,7 @@ app.put('/:tipo/:id', (req, res, next) => {
     var id = req.params.id;
 
     // tipos de colección
-    var tiposValidos = ['hospitales', 'medicos', 'usuarios'];
+    var tiposValidos = ['ticket', 'usuarios'];
     if (tiposValidos.indexOf(tipo) < 0) {
         return res.status(400).json({
             ok: false,
@@ -46,7 +43,7 @@ app.put('/:tipo/:id', (req, res, next) => {
     var nombreCortado = archivo.name.split('.');
     var extensionArchivo = nombreCortado[nombreCortado.length - 1];
 
-    // Sólo estas extensiones aceptamos
+    // Sólo estas extensiones aceptamos(se modifican para aceptar pdf, xls, obt, y etc...)
     var extensionesValidas = ['png', 'jpg', 'gif', 'jpeg'];
 
     if (extensionesValidas.indexOf(extensionArchivo) < 0) {
@@ -110,7 +107,7 @@ function subirPorTipo(tipo, id, nombreArchivo, res) {
 
             var pathViejo = './uploads/usuarios/' + usuario.img;
 
-            // Si existe, elimina la imagen anterior
+            // Si existe, elimina la imagen anterior(aqui irira el eliminar el pdf anterior para tener el nuevo segun reporte calixto)
             if (fs.existsSync(pathViejo)) {
                 fs.unlink(pathViejo);
             }
@@ -134,7 +131,7 @@ function subirPorTipo(tipo, id, nombreArchivo, res) {
 
     }
 
-    if (tipo === 'medicos') {
+    /*if (tipo === 'medicos') {
 
         Medico.findById(id, (err, medico) => {
 
@@ -148,7 +145,7 @@ function subirPorTipo(tipo, id, nombreArchivo, res) {
 
             var pathViejo = './uploads/medicos/' + medico.img;
 
-            // Si existe, elimina la imagen anterior
+            // Si existe, elimina la imagen anterior(aqui irira el eliminar el pdf anterior para tener el nuevo segun reporte calixto)
             if (fs.existsSync(pathViejo)) {
                 fs.unlink(pathViejo);
             }
@@ -166,35 +163,35 @@ function subirPorTipo(tipo, id, nombreArchivo, res) {
             })
 
         });
-    }
+    }*/
 
-    if (tipo === 'hospitales') {
+    if (tipo === 'tickets') {
 
-        Hospital.findById(id, (err, hospital) => {
+        Tickets.findById(id, (err, ticket) => {
 
-            if (!hospital) {
+            if (!ticket) {
                 return res.status(400).json({
                     ok: true,
-                    mensaje: 'Hospital no existe',
-                    errors: { message: 'Hospital no existe' }
+                    mensaje: 'Tickets no existe',
+                    errors: { message: 'Tickets no existe' }
                 });
             }
 
-            var pathViejo = './uploads/hospitales/' + hospital.img;
+            var pathViejo = './uploads/tickets/' + ticket.img;
 
-            // Si existe, elimina la imagen anterior
+            // Si existe, elimina la imagen anterior(aqui irira el eliminar el pdf anterior para tener el nuevo segun reporte calixto)
             if (fs.existsSync(pathViejo)) {
                 fs.unlink(pathViejo);
             }
 
-            hospital.img = nombreArchivo;
+            ticket.img = nombreArchivo;
 
-            hospital.save((err, hospitalActualizado) => {
+            ticket.save((err, ticketActualizado) => {
 
                 return res.status(200).json({
                     ok: true,
-                    mensaje: 'Imagen de hospital actualizada',
-                    hospital: hospitalActualizado
+                    mensaje: 'Imagen de ticket actualizada',
+                    ticket: ticketActualizado
                 });
 
             })

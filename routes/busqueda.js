@@ -2,8 +2,8 @@ var express = require('express');
 
 var app = express();
 
-var Hospital = require('../models/hospital');
-var Medico = require('../models/medico');
+//var Hospital = require('../models/hospital');
+//var Medico = require('../models/medico');
 var Usuario = require('../models/usuario');
 
 // ==============================
@@ -23,13 +23,13 @@ app.get('/coleccion/:tabla/:busqueda', (req, res) => {
             promesa = buscarUsuarios(busqueda, regex);
             break;
 
-        case 'medicos':
+       /*case 'medicos':
             promesa = buscarMedicos(busqueda, regex);
             break;
 
         case 'hospitales':
             promesa = buscarHospitales(busqueda, regex);
-            break;
+            break;*/
 
         default:
             return res.status(400).json({
@@ -62,8 +62,8 @@ app.get('/todo/:busqueda', (req, res, next) => {
 
 
     Promise.all([
-            buscarHospitales(busqueda, regex),
-            buscarMedicos(busqueda, regex),
+            //buscarHospitales(busqueda, regex),
+            //buscarMedicos(busqueda, regex),
             buscarUsuarios(busqueda, regex)
         ])
         .then(respuestas => {
@@ -80,7 +80,7 @@ app.get('/todo/:busqueda', (req, res, next) => {
 });
 
 
-function buscarHospitales(busqueda, regex) {
+/*function buscarHospitales(busqueda, regex) {
 
     return new Promise((resolve, reject) => {
 
@@ -95,9 +95,9 @@ function buscarHospitales(busqueda, regex) {
                 }
             });
     });
-}
+}*/
 
-function buscarMedicos(busqueda, regex) {
+/*function buscarMedicos(busqueda, regex) {
 
     return new Promise((resolve, reject) => {
 
@@ -113,7 +113,7 @@ function buscarMedicos(busqueda, regex) {
                 }
             });
     });
-}
+}*/
 
 function buscarUsuarios(busqueda, regex) {
 
