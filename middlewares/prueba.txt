@@ -3,3 +3,7 @@ y extraer informacion para registrarla en un archivo .txt y luego
 obtener de alli lo que sea referente de la consulta antes hecha
 utilizado para encontrar el soporte de forma automatica e implementada como 
 un middleware
+
+
+implementamos una funcion que sera llamada y retorna solo una variable que devuelva 
+el id de la primera incidencia del usuario en la base de datos que este liberado

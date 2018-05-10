@@ -1,12 +1,13 @@
 const express = require('express');
 const mdAutenticacion = require('../middlewares/autenticacion');
+const mdAsignacion = require('../middlewares/prueba');
 const app = express();
-const Hospital = require('../models/tickets');
+const Tickets = require('../models/tickets');
 
 // Obtener todos los tickets
 app.get('/', (req, res, next)=>{
 
-    Ticket.find()
+    Tickets.find()
             .exec(
             ( err, tickets )=>{
   
@@ -29,10 +30,14 @@ app.get('/', (req, res, next)=>{
 
 
 // Crear nuevo ticket
-app.post('/', mdAuth.verificaToken , ( req, res, next )=>{
+app.post('/', mdAutenticacion.verificaToken, ( req, res, next )=>{
 
     let body = req.body;
     let user = req.usuario._id;
+    //let encargado = mdAsignacion.dato();
+    //setTimeout(() => {
+    //  console.log("y el resultado es... ::::::: "+encargado);  
+    //}, 5000);  
   
     /* aqui irira la consulta del posible sujeto del middleware quizas, algo así asi que hy que ver, igual investigar la transacciones
     Usuario.findOne({role: 'SUPPORT_ROLE'}, (err, usuario)=>{
@@ -43,11 +48,11 @@ app.post('/', mdAuth.verificaToken , ( req, res, next )=>{
     */
     
     
-    let ticket = new Ticket({
+    let ticket = new Tickets({
       titulo: body.titulo,
       descripcion: body.descripcion,
       usuario: req.usuario._id,
-      encargado: req.query.id
+      encargado: 'idid'//encargado
     })
   
     ticket.save( ( err, ticketGuardado )=>{
@@ -64,7 +69,7 @@ app.post('/', mdAuth.verificaToken , ( req, res, next )=>{
         ok: true,
         ticket: ticketGuardado,
         usuario_peticion: req.usuario,
-        soporte_asignado: req.query.id
+        soporte_asignado: encargado
       })
   
     })
